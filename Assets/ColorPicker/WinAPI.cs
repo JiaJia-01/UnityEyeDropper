@@ -143,6 +143,13 @@ namespace Hank.ColorPicker
         public static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
 
         [DllImport(USER_32_DLL, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DestroyCursor(IntPtr hCursor);
+
+        [DllImport(USER_32_DLL, SetLastError = true)]
+        public static extern IntPtr LoadCursorFromFile(string fileName);
+
+        [DllImport(USER_32_DLL, SetLastError = true)]
         public static extern UInt16 RegisterClassEx([In] ref WNDCLASSEX lpwcx);
 
         [DllImport(USER_32_DLL, SetLastError = true)]

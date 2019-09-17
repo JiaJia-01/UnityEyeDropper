@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using UnityEngine;
@@ -23,8 +24,8 @@ namespace Hank.ColorPicker
         private const string WINDOW_NAME = "HankEyeDropperTransparentWindow";
         private const string WINDOW_CLASS = "HankEyeDropperWindowClass";
 
-        private const int READ_SCREEN_WIDTH = 21;
-        private const int READ_SCREEN_HEIGHT = 21;
+        private const int READ_SCREEN_WIDTH = 19;
+        private const int READ_SCREEN_HEIGHT = 19;
 
         private static bool _registered = false;
         private static ushort _atom;
@@ -228,13 +229,21 @@ namespace Hank.ColorPicker
                 cbWndExtra = 0,
                 hInstance = Process.GetCurrentProcess().Handle,
                 hIcon = WinAPI.LoadIcon(IntPtr.Zero, new IntPtr(WinAPI.IDI_APPLICATION)),
-                hCursor = WinAPI.LoadCursor(IntPtr.Zero, WinAPI.IDC_CROSS),
                 hbrBackground = WinAPI.GetStockObject(0),
                 lpszMenuName = null,
                 lpszClassName = WINDOW_CLASS
             };
 
+            //wndClass.hCursor = WinAPI.LoadCursor(IntPtr.Zero, WinAPI.IDC_CROSS);
+
+            var fileName = Path.GetTempFileName();
+            File.WriteAllBytes(fileName, EyeDropperCursor.cur2);
+            wndClass.hCursor = WinAPI.LoadCursorFromFile(fileName);
+            File.Delete(fileName);
+
             _atom = WinAPI.RegisterClassEx(ref wndClass);
+
+            WinAPI.DestroyCursor(wndClass.hCursor);
 
             _registered = true;
         }

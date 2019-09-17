@@ -1,4 +1,5 @@
 ﻿using Hank.ColorPicker;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,25 @@ public class Test : MonoBehaviour
                 }
             );
         });
+
+
+        //var b1 = File.ReadAllBytes(@"c:\Users\Hank\Desktop\q\1.cur");
+        //var b2 = File.ReadAllBytes(@"c:\Users\Hank\Desktop\q\EyeDropper.cur");
+
+        //var s1 = ZZ(b1);
+        //var s2 = ZZ(b2);
+        //b1 = null;
+    }
+
+
+    string ZZ(byte[] data)
+    {
+        string str = "";
+        for (int i = 0; i < data.Length; i++)
+        {
+            str += data[i] + ",";
+        }
+        return str;
     }
 
 }
